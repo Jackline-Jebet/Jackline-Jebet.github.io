@@ -1,16 +1,36 @@
-# Cream / gold theme
+# Jackline Jebet — Portfolio
 
-Same seven pages, styled to match the reference site's palette and type.
+Personal site: research, projects and writing on capital markets, portfolio construction and risk.
 
-Colours: --paper #f5f0e8 · --ink #0d0d0d · --accent #b8860b (dark goldenrod)
-Fonts:   Cormorant Garamond (display) · Outfit (body) · DM Mono (labels, buttons, nav)
+**Live:** https://jackline-jebet.github.io
 
-## Using just the stylesheet on the existing site
+## Stack
 
-1. Replace `assets/style.css` with this folder's `assets/style.css`.
-2. In every .html file, swap the Google Fonts <link> for:
+Static HTML and CSS. No framework, no build step, no dependencies. Open `index.html` in a browser to work on it locally.
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+## Structure
 
-3. In `index.html`, change both SVG gradient stops from #6C8CFF to #b8860b.
+```
+index.html        Home
+about.html        Background and approach
+skills.html       Skills and certifications
+projects.html     Research and software projects
+notes.html        Writing on markets
+education.html    Education timeline
+experience.html   Experience timeline
+contact.html      Contact details
+assets/
+  style.css       All styling (CSS variables at the top)
+  site.js         Mobile nav toggle
+  portrait.jpg    Profile photo
+```
 
+## Editing
+
+Colours and fonts are CSS variables in the `:root` block at the top of `assets/style.css`. Change them there rather than hunting through the file.
+
+Breakpoints: 1100px, 900px (nav collapses), 640px, 400px.
+
+## Deployment
+
+Pushing to `main` publishes automatically via GitHub Pages. Allow a minute for the build.

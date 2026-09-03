@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Node (only if you later add tooling)
+node_modules/
+package-lock.json
+
+# Python (build.py artefacts, if you keep it)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local notes / drafts you don't want public
+drafts/
+*.draft.md
+
+# Never commit these
+*.env
+.env*
+secrets*
