@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Jackline Jebet</title>
+<meta name="description" content="Quantitative research on asset allocation, multi-asset forecasting and model selection, plus data engineering and software work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">Jackline <em>Jebet</em></a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap page-head">
+  <p class="eyebrow">Projects</p>
+  <h1>Selected work</h1>
+  <p class="lede">Three quantitative research projects from the MSc, followed by shipped engineering work. Each research project states the question, the method and the result &mdash; including where the result was negative.</p>
+</section>
+
+<section class="wrap section">
+  <p class="eyebrow">Quantitative research</p>
+
+<article class="project">
+  <div class="project-meta">
+    MSc group project<br>WorldQuant University<br>~20 years of daily data
+    <span class="stack">Python<br>Statsmodels<br>Scikit-learn<br>Pandas</span>
+  </div>
+  <div>
+    <h3>Volatility Regime Asset Allocation Strategy</h3>
+    <p class="question">Can a portfolio do better by switching between assets depending on market conditions, rather than holding a fixed mix?</p>
+    <ul><li>Sourced and cleaned two decades of daily prices for a US equity fund, a long-bond fund and gold, alongside the VIX volatility index, then converted prices to returns.</li><li>Used a Hidden Markov Model to sort the market into three conditions &mdash; calm, neutral and high-stress &mdash; chosen because market conditions cannot be observed directly, only inferred from how volatility behaves.</li><li>Mapped each condition to the asset that had historically performed best in it, then backtested the switching strategy against an equal-weight portfolio and simple buy-and-hold.</li></ul>
+    <div class="result"><b>Result</b>The strategy returned 2.3% a year against 8.0% for equal-weight and 8.7% for buy-and-hold. The practical lesson: acting on a signal that arrives after the market has already moved, and concentrating into a single asset, cost more than the switching gained.</div>
+  </div>
+</article>
+
+<article class="project">
+  <div class="project-meta">
+    MSc group project<br>WorldQuant University<br>Daily data, 2005&ndash;2022
+    <span class="stack">Python<br>TensorFlow<br>Pandas</span>
+  </div>
+  <div>
+    <h3>Multi-Asset Return Analysis and Forecasting</h3>
+    <p class="question">How do different asset classes move in relation to each other, and can short-term returns be predicted from past prices?</p>
+    <ul><li>Prepared daily data for equities, long and short government bonds, gold and oil; tested each series for stationarity, converted to log returns, and produced full correlation and covariance analysis.</li><li>Found that equities and long bonds moved in opposite directions on average, that gold showed little relationship with anything else and was therefore the most useful diversifier, and that the equity&ndash;bond relationship broke down in 2022.</li><li>Compared three forecasting models &mdash; a feedforward network, an LSTM for sequential data, and a CNN using image representations of price windows &mdash; plus a joint model predicting several assets at once.</li></ul>
+    <div class="result"><b>Result</b>None of the models beat a simple benchmark out of sample. The honest conclusion is that short-horizon returns are not reliably predictable from price history alone, and the durable value of the work sits in the correlation structure rather than the forecasts.</div>
+  </div>
+</article>
+
+<article class="project">
+  <div class="project-meta">
+    MSc group project<br>WorldQuant University<br>Simulated &amp; real datasets
+    <span class="stack">Python<br>Statsmodels<br>Scikit-learn</span>
+  </div>
+  <div>
+    <h3>Regression Modelling and Model Selection Study</h3>
+    <p class="question">How do you decide which variables belong in a model, and what goes wrong when you get it wrong?</p>
+    <ul><li>Ran simulations showing that leaving out a relevant variable biases the results, and that collecting more data improves precision but does not remove the bias &mdash; a common and costly mistake in applied analysis.</li><li>Compared model selection using AIC, BIC and adjusted R&sup2;, and benchmarked ordinary least squares against weighted least squares and LASSO.</li><li>Confirmed that price series behave like a random walk while returns do not &mdash; the reason financial analysis is done on returns rather than price levels &mdash; and tested for a structural break to detect where a relationship changes.</li></ul>
+    <div class="result"><b>Result</b>The final model explained 63% of variation, improving to 73% once unequal variance was accounted for.</div>
+  </div>
+</article>
+
+</section>
+
+<section class="wrap section">
+  <p class="eyebrow">Data engineering</p>
+  <div class="cols-2">
+    <div class="card">
+      <h3>Streaming analytics &amp; NLP pipeline</h3>
+      <p>Large-scale analytics pipeline on Apache Spark using Word2Vec embeddings and K-Means clustering
+      for text analysis and pattern discovery.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">Python &middot; Spark &middot; NLP &middot; Word2Vec &middot; K-Means</p>
+    </div>
+    <div class="card">
+      <h3>Big data analytics project</h3>
+      <p>Processed and analysed large-scale datasets across a distributed stack to extract insight
+      supporting decision-making, with reporting output in Matplotlib.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">Python &middot; Hive &middot; Hadoop &middot; Spark</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <p class="eyebrow">Software</p>
+  <div class="cols-3">
+    <div class="card">
+      <h3>M-Pesa STK Push integration</h3>
+      <p>Web application integrating M-Pesa STK Push for mobile payments, with backend logic to trigger
+      payment requests and handle transaction callbacks.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">React &middot; Node &middot; Daraja API</p>
+    </div>
+    <div class="card">
+      <h3>Afyalytics health platform</h3>
+      <p>Interface design for a health analytics platform, delivered as a client engagement.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">Figma &middot; UI/UX</p>
+    </div>
+    <div class="card">
+      <h3>Scorptech Enterprise site</h3>
+      <p>Responsive company website designed, built and deployed for a paying client.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">JavaScript &middot; HTML &middot; CSS &middot; Vercel</p>
+    </div>
+    <div class="card">
+      <h3>E-health management system</h3>
+      <p>Full-stack records and scheduling system built during software engineering training.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">Ruby on Rails &middot; JavaScript &middot; MongoDB</p>
+    </div>
+    <div class="card">
+      <h3>Mobile banking app</h3>
+      <p>Hybrid mobile banking application covering account views and transfers.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">React &middot; Node &middot; Cordova</p>
+    </div>
+    <div class="card">
+      <h3>Weather forecast dashboard</h3>
+      <p>Dashboard consuming a live forecast API, with responsive layout and data presentation.</p>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">JavaScript &middot; APIs</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="foot">
+    <span>&copy; 2026 Jackline Jebet</span>
+    <span>Nairobi, Kenya &middot; Open to remote</span>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
