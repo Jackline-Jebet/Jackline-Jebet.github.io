@@ -4,11 +4,221 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notes — Jackline Jebet</title>
-<meta name="description" content="Software engineering, contract data analysis, web development and credit assessment experience.">
+<meta name="description" content="Research notes, notebooks and analysis on markets, portfolio construction and risk.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+<style>
+/* ---------- library layout ---------- */
+.lib { display: grid; grid-template-columns: 210px 1fr; gap: 40px; align-items: start; }
+
+.filters { position: sticky; top: 92px; }
+.filter-group { margin-bottom: 26px; }
+.filter-group h3 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+  margin-bottom: 10px;
+}
+.filter-group button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 300;
+  padding: 7px 11px;
+  margin-bottom: 1px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-group button:hover { background: var(--card-hover); color: var(--ink); }
+.filter-group button[aria-pressed="true"] {
+  background: var(--accent-dim);
+  border-color: var(--border);
+  color: var(--ink);
+}
+.filter-count { float: right; font-family: var(--font-mono); font-size: 11px; color: var(--muted-light); }
+
+/* ---------- cards ---------- */
+.lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+
+.entry {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+.entry:hover { box-shadow: var(--shadow-sm); border-color: var(--accent); }
+.entry h3 { font-size: 22px; line-height: 1.2; margin-bottom: 10px; }
+.entry .tags-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.entry .tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-dim);
+  color: var(--muted);
+}
+.entry p { color: var(--muted); font-size: 14.5px; margin: 0 0 16px; flex: 1; }
+.entry .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.btn-sm {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 8px 15px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all var(--transition);
+}
+.btn-sm:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.btn-sm.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.btn-sm.primary:hover { background: var(--accent-light); border-color: var(--accent-light); color: var(--paper); }
+
+.status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+  margin-left: auto;
+}
+.status.live { color: var(--accent); }
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--muted-light);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+/* ---------- modal ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,13,13,.45);
+  backdrop-filter: blur(3px);
+  z-index: 200;
+  display: none;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+.overlay.open { display: block; }
+
+.modal {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 780px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(13,13,13,.25);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.modal-head h2 { font-family: var(--font-mono); font-size: 13px; font-weight: 400; letter-spacing: .04em; flex: 1; min-width: 180px; }
+.modal-body { padding: 28px 32px 36px; }
+.modal-body h3 { font-size: 30px; margin-bottom: 14px; line-height: 1.15; }
+.modal-body .q {
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+  margin: 0 0 20px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
+}
+.modal-body p { color: var(--muted); margin: 0 0 14px; }
+.modal-body h4 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 26px 0 10px;
+  font-weight: 500;
+}
+.parts { list-style: none; margin: 0; padding: 0; }
+.parts li { border-top: 1px solid var(--border-light); }
+.parts li:last-child { border-bottom: 1px solid var(--border-light); }
+.parts a, .parts span.na {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 4px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 15px;
+  transition: color var(--transition);
+}
+.parts a:hover { color: var(--accent); }
+.parts span.na { color: var(--muted-light); }
+.parts .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted-light); flex: none; min-width: 48px; }
+.parts .soon { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); margin-left: auto; }
+
+.findings { background: var(--accent-dim); border: 1px solid var(--border); border-left: 2px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 18px; font-size: 15px; color: var(--muted); }
+
+.close {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 32px; height: 30px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1;
+  flex: none;
+}
+.close:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 900px) {
+  .lib { grid-template-columns: 1fr; gap: 24px; }
+  .filters { position: static; }
+  .filter-group { margin-bottom: 16px; }
+  .filter-group button { display: inline-block; width: auto; margin-right: 5px; }
+}
+@media (max-width: 640px) {
+  .lib-grid { grid-template-columns: 1fr; }
+  .overlay { padding: 16px 10px; }
+  .modal-body { padding: 22px 20px 28px; }
+  .modal-body h3 { font-size: 24px; }
+  .modal-body .q { font-size: 17px; }
+}
+</style>
 </head>
 <body>
 
@@ -33,68 +243,26 @@
 
 <section class="wrap page-head">
   <p class="eyebrow">Notes</p>
-  <h1>Writing on markets</h1>
-  <p class="lede">Working notes on portfolio construction, risk and applied modelling &mdash; published here first, then shared on LinkedIn. Three a week: a module note on Monday, an analysis piece on Wednesday, and something from the data on Friday.</p>
+  <h1>Research library</h1>
+  <p class="lede">Notebooks, analysis and writing on markets, portfolio construction and risk.
+  Open any entry to see what it covers and where the code lives.</p>
 </section>
 
 <section class="wrap section">
-  <p class="eyebrow">Published</p>
-  <ul class="tl">
+  <div class="lib">
 
-  <li>
-    <div class="when">Coming soon<span class="where">Analysis</span></div>
-    <div>
-      <h3><a href="#" style="text-decoration:none">Why 2008 is the reference crisis</a></h3>
-      <p style="color:var(--muted);margin:8px 0 0">Diversification failed exactly when it was needed, because the correlations everyone had modelled were estimated over a period that did not contain the event. My own multi-asset work found the same pattern in 2022.</p>
-    </div>
-  </li>
-  <li>
-    <div class="when">Coming soon<span class="where">Analysis</span></div>
-    <div>
-      <h3><a href="#" style="text-decoration:none">MPT against realised returns, and what it leaves out</a></h3>
-      <p style="color:var(--muted);margin:8px 0 0">What mean-variance optimisation produced on my own data, and where post-modern portfolio theory argues the framework misreads risk by treating upside and downside volatility as the same thing.</p>
-    </div>
-  </li>
-  <li>
-    <div class="when">Coming soon<span class="where">Evidence</span></div>
-    <div>
-      <h3><a href="#" style="text-decoration:none">Correlation structure across five asset classes</a></h3>
-      <p style="color:var(--muted);margin:8px 0 0">Equities and long bonds moved in opposite directions on average; gold showed little relationship with anything and was the most useful diversifier. Then 2022 broke the equity-bond relationship.</p>
-    </div>
-  </li>
-  </ul>
-  <p style="color:var(--muted);font-size:14px;margin-top:22px">
-    <em>All notes are my own work and do not represent the views of any employer or client.</em>
-  </p>
-</section>
+    <aside class="filters">
+      <div class="filter-group" data-group="type">
+        <h3>Type</h3>
+        <div class="filter-buttons"></div>
+      </div>
+      <div class="filter-group" data-group="topic">
+        <h3>Topic</h3>
+        <div class="filter-buttons"></div>
+      </div>
+    </aside>
 
-<section class="wrap section">
-  <p class="eyebrow">What I write about</p>
-  <div class="cols-3">
-    <div class="card">
-      <h3>Portfolio &amp; risk</h3>
-      <p>Construction, diversification and what happens to both under stress. Where the standard framework
-      holds and where it quietly stops working.</p>
-    </div>
-    <div class="card">
-      <h3>Applied modelling</h3>
-      <p>What models actually deliver once tested out of sample &mdash; including credit default prediction
-      and the trade-offs between accuracy and interpretability.</p>
-    </div>
-    <div class="card">
-      <h3>Frontier &amp; African markets</h3>
-      <p>What has to change before imported models work on thinly traded markets. The constraint is usually
-      the data, not the method.</p>
-    </div>
-  </div>
-</section>
-
-<section class="wrap section">
-  <p class="eyebrow">Elsewhere</p>
-  <p class="lede">Posts go out on LinkedIn three times a week. Longer pieces live here.</p>
-  <div class="socials">
-    <a href="https://linkedin.com/in/jackline-jebet" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/Jackline-Jebet" target="_blank" rel="noopener">GitHub</a>
+    <div class="lib-grid" id="grid"></div>
   </div>
 </section>
 
@@ -105,6 +273,262 @@
   </div>
 </div>
 
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle"></h2>
+      <a class="btn-sm" id="mGithub" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a class="btn-sm" id="mLinkedin" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+      <button class="close" id="mClose" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script src="assets/site.js"></script>
+<script>
+/* =========================================================================
+   THE ONLY PART YOU EDIT.
+   Add an object per entry. Keep `slug` unique and lowercase.
+   Set url: null on a part to render it as "soon" instead of a link.
+   ========================================================================= */
+const GITHUB   = "https://github.com/Jackline-Jebet";
+const LINKEDIN = "https://linkedin.com/in/jackline-jebet";
+
+const ENTRIES = [
+  {
+    slug: "volatility-regimes",
+    title: "Volatility Regime Asset Allocation",
+    type: "Notebook",
+    topics: ["Portfolio", "Markets"],
+    tags: ["python", "hmm", "backtest", "20y-data"],
+    blurb: "Can a portfolio do better by switching assets with market conditions, rather than holding a fixed mix?",
+    live: true,
+    question: "Can a portfolio do better by switching between assets depending on market conditions, rather than holding a fixed mix?",
+    intro: "Two decades of daily prices for a US equity fund, a long-bond fund and gold, alongside the VIX. A Hidden Markov Model sorts the market into calm, neutral and high-stress conditions, and the strategy allocates to whichever asset historically did best in each.",
+    parts: [
+      { n: "Part 1", label: "Data collection and return construction", url: null },
+      { n: "Part 2", label: "Regime classification with a Hidden Markov Model", url: null },
+      { n: "Part 3", label: "Strategy construction and backtest", url: null },
+      { n: "Part 4", label: "Results against equal-weight and buy-and-hold", url: null }
+    ],
+    findings: "The strategy returned 2.3% a year against 8.0% for equal-weight and 8.7% for buy-and-hold. Acting on a signal that arrives after the market has already moved, combined with concentrating into a single asset, cost more than the switching gained.",
+    repo: null
+  },
+  {
+    slug: "multi-asset",
+    title: "Multi-Asset Return Analysis and Forecasting",
+    type: "Notebook",
+    topics: ["Markets", "Machine learning"],
+    tags: ["python", "tensorflow", "lstm", "cnn"],
+    blurb: "How do asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
+    live: true,
+    question: "How do different asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
+    intro: "Daily data for equities, long and short government bonds, gold and oil from 2005 to 2022. Stationarity testing, log returns, and a full correlation and covariance analysis, followed by a comparison of three forecasting architectures.",
+    parts: [
+      { n: "Part 1", label: "Data preparation and stationarity testing", url: null },
+      { n: "Part 2", label: "Correlation and covariance structure", url: null },
+      { n: "Part 3", label: "Feedforward, LSTM and CNN forecasting models", url: null },
+      { n: "Part 4", label: "Joint multi-asset model and out-of-sample results", url: null }
+    ],
+    findings: "Equities and long bonds moved in opposite directions on average; gold showed little relationship with anything and was the most useful diversifier; the equity\u2013bond relationship broke down in 2022. No forecasting model beat a simple benchmark out of sample.",
+    repo: null
+  },
+  {
+    slug: "constrained-portfolios",
+    title: "Constrained vs Unconstrained Portfolios",
+    type: "Notebook",
+    topics: ["Portfolio", "Risk"],
+    tags: ["python", "optimisation", "us-equities"],
+    blurb: "What does it cost a portfolio to respect the constraints a real mandate imposes?",
+    live: true,
+    question: "What does it actually cost a portfolio to respect the constraints a real mandate imposes?",
+    intro: "A ten-stock US large-cap universe. The mean-variance efficient frontier solved without constraints as a theoretical baseline, then re-solved under no short selling and position caps \u2014 the conditions an actual mandate carries.",
+    parts: [
+      { n: "Part 1", label: "Universe selection and input estimation", url: null },
+      { n: "Part 2", label: "Unconstrained mean-variance frontier", url: null },
+      { n: "Part 3", label: "Re-solving under mandate constraints", url: null },
+      { n: "Part 4", label: "Comparing weights, return and volatility", url: null }
+    ],
+    findings: "Results pending \u2014 to be added from the executed notebook.",
+    repo: null
+  },
+  {
+    slug: "model-selection",
+    title: "Regression and Model Selection",
+    type: "Notebook",
+    topics: ["Machine learning"],
+    tags: ["python", "statsmodels", "lasso"],
+    blurb: "Which variables belong in a model, and what goes wrong when you get it wrong?",
+    live: true,
+    question: "How do you decide which variables belong in a model, and what goes wrong when you get it wrong?",
+    intro: "Simulation work on omitted variable bias, followed by a comparison of model selection criteria and estimators on real data.",
+    parts: [
+      { n: "Part 1", label: "Omitted variable bias by simulation", url: null },
+      { n: "Part 2", label: "Model selection with AIC, BIC and adjusted R\u00b2", url: null },
+      { n: "Part 3", label: "OLS against weighted least squares and LASSO", url: null },
+      { n: "Part 4", label: "Stationarity and structural break testing", url: null }
+    ],
+    findings: "Leaving out a relevant variable biases results, and collecting more data improves precision without removing the bias. The final model explained 63% of variation, rising to 73% once unequal variance was accounted for.",
+    repo: null
+  },
+  {
+    slug: "sql-business-analysis",
+    title: "SQL Business Analysis",
+    type: "SQL",
+    topics: ["Business"],
+    tags: ["postgres", "sql", "cohorts"],
+    blurb: "Cleaning and analysing operational business data in SQL, ending in a recommendation rather than a metric.",
+    live: false,
+    question: "What does the operational data say that the reporting does not?",
+    intro: "In progress. Data loaded into Postgres and analysed in SQL rather than Pandas \u2014 joins, window functions, CTEs and cohort comparison \u2014 with the finding stated as a decision someone can act on.",
+    parts: [
+      { n: "Part 1", label: "Schema design and loading", url: null },
+      { n: "Part 2", label: "Profiling: nulls, duplicates, distributions", url: null },
+      { n: "Part 3", label: "Cohort and segment analysis", url: null },
+      { n: "Part 4", label: "Findings and recommendation", url: null }
+    ],
+    findings: "In progress.",
+    repo: null
+  },
+  {
+    slug: "credit-default",
+    title: "Credit Default Prediction",
+    type: "Notebook",
+    topics: ["Credit", "Machine learning"],
+    tags: ["python", "classification", "imbalance"],
+    blurb: "At what score threshold does approving more borrowers stop being worth the additional losses?",
+    live: false,
+    question: "At what score threshold does approving more borrowers stop being worth the additional losses?",
+    intro: "In progress. A classification problem where accuracy is the wrong metric \u2014 defaults are a small share of the sample, so a model predicting no default for everyone scores well and is worthless. Time-based splitting, precision-recall evaluation, and a threshold analysis translating probabilities into a lending decision.",
+    parts: [
+      { n: "Part 1", label: "Data, base rates and class imbalance", url: null },
+      { n: "Part 2", label: "Logistic regression baseline", url: null },
+      { n: "Part 3", label: "Gradient boosting and the interpretability trade-off", url: null },
+      { n: "Part 4", label: "Threshold analysis and lending recommendation", url: null }
+    ],
+    findings: "In progress.",
+    repo: null
+  },
+  {
+    slug: "why-2008",
+    title: "Why 2008 is the reference crisis",
+    type: "Writing",
+    topics: ["Markets", "Risk"],
+    tags: ["essay", "correlation"],
+    blurb: "Diversification failed exactly when it was needed, because the correlations everyone had modelled were estimated over a period that did not contain the event.",
+    live: false,
+    question: "Why does every finance course keep returning to 2008?",
+    intro: "Planned. The argument: 2008 is the cleanest available observation of correlation breakdown, and my own multi-asset work found the same pattern repeating in 2022.",
+    parts: [
+      { n: "\u2014", label: "Full piece", url: null }
+    ],
+    findings: "Planned.",
+    repo: null
+  }
+];
+
+/* ---------- rendering (no need to edit below) ---------- */
+const grid = document.getElementById('grid');
+const state = { type: 'All', topic: 'All' };
+
+function uniq(key) {
+  const all = ENTRIES.flatMap(e => key === 'type' ? [e.type] : e.topics);
+  return ['All', ...Array.from(new Set(all)).sort()];
+}
+
+function countFor(group, value) {
+  return ENTRIES.filter(e => {
+    const okType  = group === 'type'
+      ? (value === 'All' || e.type === value)
+      : (state.type === 'All' || e.type === state.type);
+    const okTopic = group === 'topic'
+      ? (value === 'All' || e.topics.includes(value))
+      : (state.topic === 'All' || e.topics.includes(state.topic));
+    return okType && okTopic;
+  }).length;
+}
+
+function buildFilters() {
+  document.querySelectorAll('.filter-group').forEach(g => {
+    const group = g.dataset.group;
+    const box = g.querySelector('.filter-buttons');
+    box.innerHTML = '';
+    uniq(group).forEach(v => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-pressed', state[group] === v);
+      b.innerHTML = v + '<span class="filter-count">' + countFor(group, v) + '</span>';
+      b.addEventListener('click', () => { state[group] = v; buildFilters(); render(); });
+      box.appendChild(b);
+    });
+  });
+}
+
+function render() {
+  const list = ENTRIES.filter(e =>
+    (state.type === 'All' || e.type === state.type) &&
+    (state.topic === 'All' || e.topics.includes(state.topic))
+  );
+  grid.innerHTML = '';
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty">Nothing here yet under those filters.</div>';
+    return;
+  }
+  list.forEach(e => {
+    const card = document.createElement('article');
+    card.className = 'entry';
+    card.innerHTML =
+      '<h3>' + e.title + '</h3>' +
+      '<div class="tags-row">' + e.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
+      '<p>' + e.blurb + '</p>' +
+      '<div class="row">' +
+        '<button class="btn-sm primary" data-slug="' + e.slug + '">Browse</button>' +
+        (e.repo ? '<a class="btn-sm" href="' + e.repo + '" target="_blank" rel="noopener">Code</a>' : '') +
+        '<span class="status' + (e.live ? ' live' : '') + '">' + (e.live ? 'Published' : 'In progress') + '</span>' +
+      '</div>';
+    card.querySelector('button[data-slug]').addEventListener('click', () => open(e));
+    grid.appendChild(card);
+  });
+}
+
+const overlay = document.getElementById('overlay');
+const mBody   = document.getElementById('modalBody');
+
+function open(e) {
+  document.getElementById('modalTitle').textContent = e.slug;
+  document.getElementById('mGithub').href   = e.repo || GITHUB;
+  document.getElementById('mLinkedin').href = LINKEDIN;
+
+  mBody.innerHTML =
+    '<h3>' + e.title + '</h3>' +
+    '<p class="q">' + e.question + '</p>' +
+    '<p>' + e.intro + '</p>' +
+    '<h4>Contents</h4>' +
+    '<ul class="parts">' + e.parts.map(p =>
+      p.url
+        ? '<li><a href="' + p.url + '" target="_blank" rel="noopener"><span class="n">' + p.n + '</span>' + p.label + '</a></li>'
+        : '<li><span class="na"><span class="n">' + p.n + '</span>' + p.label + '<span class="soon">soon</span></span></li>'
+    ).join('') + '</ul>' +
+    '<h4>What it found</h4>' +
+    '<div class="findings">' + e.findings + '</div>';
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('mClose').focus();
+}
+
+function close() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('mClose').addEventListener('click', close);
+overlay.addEventListener('click', ev => { if (ev.target === overlay) close(); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') close(); });
+
+buildFilters();
+render();
+</script>
 </body>
 </html>

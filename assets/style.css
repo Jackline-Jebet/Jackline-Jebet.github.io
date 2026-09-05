@@ -520,7 +520,7 @@ h1, h2, h3 {
   .nav-links a { padding: 12px 6px; font-size: 14px; }
   .nav-links a[aria-current="page"]::after { display: none; }
   .nav-links a[aria-current="page"] { color: var(--accent); }
-  .burger { display: block; }
+  .burger { display: block; order: 3; margin-left: auto; }
   .burger:hover { background: var(--accent-dim); border-color: var(--accent); }
 
   .hero-grid { grid-template-columns: 1fr; gap: 42px; }
