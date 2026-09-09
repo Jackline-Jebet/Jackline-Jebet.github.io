@@ -34,11 +34,30 @@
 <section class="wrap page-head">
   <p class="eyebrow">Projects</p>
   <h1>Selected work</h1>
-  <p class="lede">Three quantitative research projects from the MSc, followed by shipped engineering work. Each research project states the question, the method and the result &mdash; including where the result was negative.</p>
+  <p class="lede">Quantitative research projects from the MSc, followed by shipped engineering work. Each research project states the question, the method and the result &mdash; including where the result was negative.</p>
 </section>
 
 <section class="wrap section">
   <p class="eyebrow">Quantitative research</p>
+
+  <article class="project">
+  <div class="project-meta">
+    MSc group project<br>WorldQuant University<br>10 US large caps, 501 obs
+    <span class="stack">Python<br>NumPy / SciPy<br>Scikit-learn<br>Matplotlib</span>
+  </div>
+  <div>
+    <h3>Kelly Portfolios, Denoising and Hierarchical Risk Parity</h3>
+    <p class="question">Do machine learning techniques improve portfolio construction, or merely complicate it?</p>
+    <ul>
+      <li>Built a Kelly-optimal portfolio maximising empirical log growth on the realised return distribution rather than a Gaussian approximation, since every asset showed excess kurtosis between 2.4 and 16.3.</li>
+      <li>Applied Marchenko-Pastur denoising, hierarchical risk parity and detoning to the covariance matrix, then compared six portfolios against an equal-weight benchmark.</li>
+      <li>Validated with five purged, embargoed cross-validation folds rather than a single out-of-sample window, because plain K-fold leaks future information into training on a return series.</li>
+    </ul>
+    <div class="result"><b>Result</b>
+      Denoising reduced the condition number by 58.9% and changed the Kelly weights by exactly zero: the 20% position cap had already pinned all five holdings to the ceiling, so improving the inputs could not move a solution sitting on the boundary. Across folds, equal weight posted the highest mean growth. Only HRP's downside-risk reduction survived validation, cutting mean drawdown from &minus;10.59% to &minus;7.49%.
+    </div>
+  </div>
+</article>
 
 <article class="project">
   <div class="project-meta">

@@ -287,15 +287,32 @@
 
 <script src="assets/site.js"></script>
 <script>
-/* =========================================================================
-   THE ONLY PART YOU EDIT.
-   Add an object per entry. Keep `slug` unique and lowercase.
-   Set url: null on a part to render it as "soon" instead of a link.
-   ========================================================================= */
+
+
+
 const GITHUB   = "https://github.com/Jackline-Jebet";
 const LINKEDIN = "https://linkedin.com/in/jackline-jebet";
 
 const ENTRIES = [
+
+    {
+    slug: "kelly-hrp-denoising",
+    title: "The technique that worked perfectly and did nothing",
+    type: "Writing",
+    topics: ["Portfolio", "Risk", "Machine learning"],
+    tags: ["kelly", "hrp", "denoising", "cross-validation"],
+    blurb: "Covariance denoising improved the correlation matrix by 59% and changed the portfolio weights by exactly zero. The reason was worth more than the technique.",
+    live: true,
+    question: "Do machine learning techniques improve portfolio construction, or just complicate it?",
+    intro: "A Kelly-optimal portfolio of ten large US stocks, then three covariance techniques \u2014 denoising, hierarchical risk parity and detoning \u2014 tested against it on a held-out quarter and across five purged cross-validation folds.",
+        parts: [
+      { n: "Read the Article", label: "The technique that worked perfectly and did nothing", url: "notes-kelly-portfolio.html" },
+      { n: "Notebook/Code", label: "Full analysis & Results (Kelly, denoising, HRP, detoning, cross-validation)", url: "https://github.com/Jackline-Jebet/kelly-hrp-portfolio/blob/main/Portfolio_Management_Project_2.ipynb" },
+      { n: "Report", label: "Methodology and results (PDF)", url: "assets/GWP2-report.pdf" }
+    ],
+    findings: "Denoising cut the condition number 58.9% and moved the Kelly weights by zero \u2014 the 20% cap had already pinned every position to the ceiling. Sharpe ratios were identical across all three leverage levels while drawdown ran from 3.2% to 13.1%. Across five folds, equal weight posted the highest mean growth. The only claim that survived validation was HRP's reduction in downside risk.",
+    repo: "https://github.com/Jackline-Jebet/kelly-hrp-portfolio"
+  },
   {
     slug: "volatility-regimes",
     title: "Volatility Regime Asset Allocation",

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The technique that worked perfectly and did nothing — Jackline Jebet</title>
+<meta name="description" content="Covariance denoising improved the correlation matrix by 59% and changed the portfolio weights by exactly zero. Why, and what it means for analysis generally.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=3">
+<style>
+.article { max-width: 720px; margin: 0 auto; }
+.article-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+  margin-bottom: 18px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.article h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 300; letter-spacing: -.015em; line-height: 1.1; margin-bottom: 20px; }
+.standfirst { font-size: 19px; color: var(--muted); margin-bottom: 30px; line-height: 1.6; }
+.byline {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+.article h2 { font-size: 28px; font-weight: 400; margin: 44px 0 16px; }
+.article p { margin: 0 0 18px; }
+.article table { width: 100%; border-collapse: collapse; margin: 24px 0 28px; font-size: 15px; }
+.article th, .article td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--border-light); }
+.article th:first-child, .article td:first-child { text-align: left; }
+.article thead th { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-light); border-bottom: 1px solid var(--border); }
+.article tbody tr.hl td { background: var(--accent-dim); font-weight: 500; }
+.pull {
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+  margin: 30px 0;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.35;
+}
+.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+.endnote { font-size: 14px; color: var(--muted-light); border-top: 1px solid var(--border); padding-top: 20px; margin-top: 44px; }
+.endnote a { color: var(--ink); border-bottom: 1px solid var(--accent); text-decoration: none; }
+@media (max-width: 640px) {
+  .article h2 { font-size: 23px; margin: 32px 0 12px; }
+  .standfirst { font-size: 17px; }
+  .pull { font-size: 19px; padding-left: 15px; }
+  .article table { font-size: 13.5px; }
+  .article th, .article td { padding: 7px 5px; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">Jackline <em>Jebet</em></a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="notes.html" aria-current="page">Notes</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap section">
+<article class="article">
+
+  <div class="article-meta">
+    <span>Analysis</span><span>Portfolio &amp; risk</span><span>10 min read</span>
+  </div>
+
+  <h1>The technique that worked perfectly and did nothing</h1>
+
+  <p class="standfirst">Covariance denoising cut our correlation matrix's condition number by 59%,
+  exactly as the literature says it should. It changed the portfolio weights by precisely zero.
+  The reason turned out to be worth more than the technique.</p>
+
+  <p class="byline">Portfolio Management project &middot;
+  MSc Financial Engineering, WorldQuant University &middot; Written up by Jackline Jebet</p>
+
+  <p>We spent a while convinced we had a bug.</p>
+
+  <p>The setup was simple enough. Ten large-cap US stocks, two years of daily prices, a Kelly
+  optimizer, and a mandate saying no single holding could exceed 20%. Then we applied covariance
+  denoising, a standard piece of the quantitative finance toolkit. It strips statistical noise out
+  of a correlation matrix before you hand that matrix to an optimizer.</p>
+
+  <p>It ran fine. Diagnostics looked healthy. The condition number dropped from 16.96 to 6.97, a
+  59% improvement, roughly what you would expect from the literature.</p>
+
+  <p>Then we compared the new portfolio weights against the old ones. They were the same. Not
+  similar. The same, to every decimal place we printed.</p>
+
+  <p>We checked whether the wrong matrix had gone into the optimizer. It hadn't. We checked whether
+  the denoising function was quietly returning its input unchanged. It wasn't; the matrix really
+  had changed. The explanation, once we found it, was the most useful thing we got out of the whole
+  project. And it isn't specific to portfolios.</p>
+
+  <h2>Why nothing moved</h2>
+
+  <p>The mandate capped any position at 20%. That one rule does more than it looks like it does.
+  One divided by 0.20 is five, so at least five positions have to carry weight regardless of what
+  the data says. Our optimizer held exactly five names, and every one sat at 20.0%.</p>
+
+  <p>Every active position was pressed against the edge of what the mandate allowed.</p>
+
+  <p>That is what killed the denoising. Normally an optimizer picks among interior solutions,
+  weighing assets against each other on their estimated returns and how they move together. Improve
+  those estimates and the weighing shifts. But our solution was not interior. It was jammed into a
+  corner of the feasible region, and that corner is defined by the rule, not by the data. You can
+  hand that optimizer a better covariance matrix all day. It has nowhere to go.</p>
+
+  <p class="pull">Nobody looks at a 20% position limit and thinks of it as a modelling decision.
+  It reads like governance. A box you tick. But it was doing all the work, and the analysis was
+  taking the credit.</p>
+
+  <p>Most people reading this have sat in a meeting where a disappointing result was met with a
+  proposal to build a better model. Sometimes that is the right call. Sometimes the model was never
+  the binding thing, and a mandate rule or a liquidity floor or a policy nobody has revisited in
+  three years is quietly deciding the outcome. Checking which one binds costs nothing. Building the
+  better model costs a quarter.</p>
+
+  <hr class="rule">
+
+  <h2>Sharpe ratios cannot see leverage</h2>
+
+  <p>While we were in there, we compared the same portfolio at half, full and double leverage,
+  borrowing at the risk-free rate to fund the extra exposure.</p>
+
+  <table>
+    <thead><tr><th>Measure</th><th>Half-Kelly</th><th>Kelly</th><th>Double-Kelly</th></tr></thead>
+    <tbody>
+      <tr><td>Cumulative return</td><td>4.66%</td><td>8.07%</td><td>14.42%</td></tr>
+      <tr class="hl"><td>Sharpe ratio</td><td>1.4562</td><td>1.4562</td><td>1.4562</td></tr>
+      <tr><td>Annualised volatility</td><td>9.61%</td><td>19.21%</td><td>38.42%</td></tr>
+      <tr><td>Maximum drawdown</td><td>&minus;3.16%</td><td>&minus;6.52%</td><td>&minus;13.07%</td></tr>
+      <tr><td>95% cVaR (daily)</td><td>&minus;1.23%</td><td>&minus;2.47%</td><td>&minus;4.96%</td></tr>
+    </tbody>
+  </table>
+
+  <p>We checked that column too. Also not a bug.</p>
+
+  <p>Excess return scales linearly with leverage, so doubling exposure doubles both the average
+  excess return and its standard deviation. The Sharpe ratio is one divided by the other. It cannot
+  register the change, by construction.</p>
+
+  <p>Now look at what does change. Worst drawdown goes from 3.2% to 13.1%. Expected loss on a bad
+  day roughly quadruples. Those are three very different things to live with, and the most quoted
+  number in finance rates all of them identically.</p>
+
+  <p>There is a further wrinkle we only found by validating properly. Kelly's theory says growth
+  stops improving past a certain amount of leverage: the drag from compounding losses starts to
+  outweigh the benefit of compounding gains. In the weakest of our five validation periods, double
+  leverage grew at 6.12% a year against full leverage's 7.38%, while carrying twice the drawdown.
+  Worse return, more pain.</p>
+
+  <p>On the single test quarter, which happened to be a rising market, double leverage looked like
+  the obvious answer. It won by a mile. Had we stopped there we would have drawn exactly the wrong
+  conclusion.</p>
+
+  <hr class="rule">
+
+  <h2>Equal weight was hard to beat</h2>
+
+  <p>We tested six portfolios across five validation periods, purging data around each test window
+  so nothing from the future leaked backwards into training. This matters more than people assume.
+  Shuffle a return series the way you would shuffle an ordinary dataset and the results stop
+  meaning anything.</p>
+
+  <p>On the single out-of-sample quarter, the best combination — hierarchical risk parity with
+  denoising — won five of six metrics. Near enough a clean sweep.</p>
+
+  <p>Across all five periods it came apart.</p>
+
+  <table>
+    <thead><tr><th>Portfolio</th><th>Growth (mean)</th><th>Growth (sd)</th><th>Sharpe (mean)</th><th>Max DD</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Equal weight</td><td>39.00%</td><td>27.97%</td><td>1.99</td><td>&minus;9.70%</td></tr>
+      <tr><td>HRP (raw)</td><td>34.15%</td><td>28.63%</td><td>2.32</td><td>&minus;7.49%</td></tr>
+      <tr><td>HRP + denoised</td><td>33.24%</td><td>27.31%</td><td>2.21</td><td>&minus;7.66%</td></tr>
+      <tr><td>HRP + den. + detoned</td><td>35.58%</td><td>25.46%</td><td>2.23</td><td>&minus;8.31%</td></tr>
+      <tr><td>Kelly</td><td>33.25%</td><td>15.79%</td><td>1.34</td><td>&minus;10.59%</td></tr>
+      <tr><td>Kelly + denoised</td><td>32.16%</td><td>14.76%</td><td>1.30</td><td>&minus;10.67%</td></tr>
+    </tbody>
+  </table>
+
+  <p>A plain equal-weight portfolio, one-tenth in each stock, had the highest average growth rate
+  of anything we tested. No estimation. No covariance matrix. No code beyond dividing by ten.
+  DeMiguel, Garlappi and Uppal published this result in 2009 and it has been replicated many times,
+  so it should not have been a surprise. There is a difference between reading a finding and
+  watching it happen to your own work.</p>
+
+  <p>Look at the standard deviation column, though, because that is the real finding. HRP's mean
+  cross-validated Sharpe was 2.32 with a standard deviation of 2.31. The dispersion equals the
+  mean. In one of the five folds, four of the six portfolios posted negative Sharpe ratios. Against
+  variation that size, a difference of 0.1 in mean Sharpe is not a result. It is noise with a
+  decimal point.</p>
+
+  <p>One thing did survive validation: hierarchical risk parity reduced downside risk consistently,
+  cutting mean drawdown from &minus;10.59% to &minus;7.49% and cVaR from &minus;2.79% to
+  &minus;1.92%. That is the claim we are comfortable making, and it is a narrower one than the test
+  quarter suggested.</p>
+
+  <hr class="rule">
+
+  <h2>What we would take from it</h2>
+
+  <p>Diagnose before treating. Denoising did nothing here because our data barely had the problem
+  it solves — 437 observations for 10 assets means the covariance was already well estimated. The
+  technique is built for the opposite case, hundreds of assets in a short window. Applying it to
+  our problem was effort without return, and knowing which regime you are in is more valuable than
+  knowing the technique.</p>
+
+  <p>And the constraint matters more than the estimate when the constraint binds. The most useful
+  question in the whole project cost nothing to ask: what is actually determining this answer?</p>
+
+  <p class="endnote">
+  Full methodology, code and results: <a href="#" id="repoLink">GitHub repository</a> ·
+  Written up from a group project with Edgar Jandi and Tomiwo Ebenezer Akinbowale for MSc Financial
+  Engineering, WorldQuant University. <a href="notes.html">More notes</a>
+  </p>
+
+</article>
+</section>
+
+<div class="wrap">
+  <div class="foot">
+    <span>&copy; 2026 Jackline Jebet</span>
+    <span>Nairobi, Kenya &middot; Open to remote</span>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
