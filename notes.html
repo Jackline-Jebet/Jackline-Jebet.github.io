@@ -314,6 +314,23 @@ const ENTRIES = [
     repo: "https://github.com/Jackline-Jebet/kelly-hrp-portfolio"
   },
   {
+    slug: "correlation-2008-vs-2022",
+    title: "Diversification didn't fail in 2008",
+    type: "Writing",
+    topics: ["Markets", "Risk"],
+    tags: ["correlation", "regimes", "2008", "2022"],
+    blurb: "I went looking for correlation breakdown in the financial crisis and found the opposite. The bond hedge worked in 2008. It broke in 2022.",
+    live: true,
+    question: "Did diversification actually fail during the 2008 crisis?",
+    intro: "Five asset classes, 4,211 daily observations from 2006 to 2022. Measured mean pairwise and equity\u2013bond correlation across pre-crisis, crisis, recovery and 2022 windows, then decomposed the aggregate into its component pairs.",
+    parts: [
+      { n: "Article", label: "Diversification didn't fail in 2008", url: "notes-correlation-breakdown.html" },
+      { n: "Notebook", label: "Rolling correlation analysis", url: "https://github.com/Jackline-Jebet/correlation-regimes" }
+    ],
+    findings: "The crisis window had the lowest average correlation of the four periods measured, with equity\u2013bond at \u22120.44. The highest was 2022, at +0.251 mean pairwise and equity\u2013bond turning positive. Within 2008, equity\u2013oil rose from +0.08 to +0.56 while equity\u2013gold fell from +0.25 to +0.04 \u2014 two opposite moves that cancelled in the aggregate. The distinction is growth shock versus discount-rate shock.",
+    repo: "https://github.com/Jackline-Jebet/correlation-regimes"
+  },
+  {
     slug: "volatility-regimes",
     title: "Volatility Regime Asset Allocation",
     type: "Notebook",
@@ -332,25 +349,25 @@ const ENTRIES = [
     findings: "The strategy returned 2.3% a year against 8.0% for equal-weight and 8.7% for buy-and-hold. Acting on a signal that arrives after the market has already moved, combined with concentrating into a single asset, cost more than the switching gained.",
     repo: null
   },
-  {
-    slug: "multi-asset",
-    title: "Multi-Asset Return Analysis and Forecasting",
-    type: "Notebook",
-    topics: ["Markets", "Machine learning"],
-    tags: ["python", "tensorflow", "lstm", "cnn"],
-    blurb: "How do asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
-    live: true,
-    question: "How do different asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
-    intro: "Daily data for equities, long and short government bonds, gold and oil from 2005 to 2022. Stationarity testing, log returns, and a full correlation and covariance analysis, followed by a comparison of three forecasting architectures.",
-    parts: [
-      { n: "Part 1", label: "Data preparation and stationarity testing", url: null },
-      { n: "Part 2", label: "Correlation and covariance structure", url: null },
-      { n: "Part 3", label: "Feedforward, LSTM and CNN forecasting models", url: null },
-      { n: "Part 4", label: "Joint multi-asset model and out-of-sample results", url: null }
-    ],
-    findings: "Equities and long bonds moved in opposite directions on average; gold showed little relationship with anything and was the most useful diversifier; the equity\u2013bond relationship broke down in 2022. No forecasting model beat a simple benchmark out of sample.",
-    repo: null
-  },
+  // {
+  //   slug: "multi-asset",
+  //   title: "Multi-Asset Return Analysis and Forecasting",
+  //   type: "Notebook",
+  //   topics: ["Markets", "Machine learning"],
+  //   tags: ["python", "tensorflow", "lstm", "cnn"],
+  //   blurb: "How do asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
+  //   live: true,
+  //   question: "How do different asset classes move in relation to each other, and can short-term returns be predicted from past prices?",
+  //   intro: "Daily data for equities, long and short government bonds, gold and oil from 2005 to 2022. Stationarity testing, log returns, and a full correlation and covariance analysis, followed by a comparison of three forecasting architectures.",
+  //   parts: [
+  //     { n: "Part 1", label: "Data preparation and stationarity testing", url: null },
+  //     { n: "Part 2", label: "Correlation and covariance structure", url: null },
+  //     { n: "Part 3", label: "Feedforward, LSTM and CNN forecasting models", url: null },
+  //     { n: "Part 4", label: "Joint multi-asset model and out-of-sample results", url: null }
+  //   ],
+  //   findings: "Equities and long bonds moved in opposite directions on average; gold showed little relationship with anything and was the most useful diversifier; the equity\u2013bond relationship broke down in 2022. No forecasting model beat a simple benchmark out of sample.",
+  //   repo: null
+  // },
   {
     slug: "constrained-portfolios",
     title: "Constrained vs Unconstrained Portfolios",

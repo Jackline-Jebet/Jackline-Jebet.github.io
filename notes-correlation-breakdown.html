@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diversification didn't fail in 2008 — Jackline Jebet</title>
+<meta name="description" content="I went looking for correlation breakdown in the 2008 crisis and found the opposite: the bond hedge worked. The year it broke was 2022, and the reason is the kind of shock, not the size of it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=3">
+<style>
+.article { max-width: 720px; margin: 0 auto; }
+.article-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-light); margin-bottom: 18px; display: flex; gap: 14px; flex-wrap: wrap; }
+.article h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 300; letter-spacing: -.015em; line-height: 1.1; margin-bottom: 20px; }
+.standfirst { font-size: 19px; color: var(--muted); margin-bottom: 30px; line-height: 1.6; }
+.byline { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px 0; font-size: 14px; color: var(--muted); margin-bottom: 40px; }
+.article h2 { font-size: 28px; font-weight: 400; margin: 44px 0 16px; }
+.article p { margin: 0 0 18px; }
+.article figure { margin: 30px 0; }
+.article figure img { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); }
+.article figcaption { font-size: 13px; color: var(--muted-light); margin-top: 10px; font-style: italic; }
+.article table { width: 100%; border-collapse: collapse; margin: 24px 0 28px; font-size: 15px; }
+.article th, .article td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--border-light); }
+.article th:first-child, .article td:first-child { text-align: left; }
+.article thead th { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-light); border-bottom: 1px solid var(--border); }
+.article tbody tr.hl td { background: var(--accent-dim); font-weight: 500; }
+.pull { border-left: 2px solid var(--accent); padding-left: 20px; margin: 30px 0; font-family: var(--font-serif); font-size: 23px; font-style: italic; font-weight: 300; line-height: 1.35; }
+.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+.caveat { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin: 30px 0; font-size: 15px; color: var(--muted); }
+.caveat h3 { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-weight: 500; }
+.caveat ul { margin: 0; padding-left: 18px; }
+.caveat li { margin-bottom: 8px; }
+.endnote { font-size: 14px; color: var(--muted-light); border-top: 1px solid var(--border); padding-top: 20px; margin-top: 44px; }
+.endnote a { color: var(--ink); border-bottom: 1px solid var(--accent); text-decoration: none; }
+@media (max-width: 640px) {
+  .article h2 { font-size: 23px; margin: 32px 0 12px; }
+  .standfirst { font-size: 17px; }
+  .pull { font-size: 19px; padding-left: 15px; }
+  .article table { font-size: 13px; }
+  .article th, .article td { padding: 7px 4px; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">Jackline <em>Jebet</em></a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="notes.html" aria-current="page">Notes</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap section">
+<article class="article">
+
+  <div class="article-meta">
+    <span>Analysis</span><span>Markets &amp; risk</span><span>9 min read</span>
+  </div>
+
+  <h1>Diversification didn't fail in 2008</h1>
+
+  <p class="standfirst">I set out to measure the thing everyone says about the financial
+  crisis: that correlations converge and diversification stops working when you need it
+  most. The data said the opposite. The bond hedge worked in 2008. The year it broke
+  was 2022.</p>
+
+  <p class="byline">Jackline Jebet &middot; MSc Financial Engineering, WorldQuant University
+  &middot; 4,211 daily observations, 2006&ndash;2022</p>
+
+  <p>The plan was straightforward. Take five asset classes, measure how correlated they
+  were before the crisis, during it and after, and show diversification thinning at the
+  worst possible moment. It is one of the most repeated claims in finance, and I expected
+  to confirm it in an afternoon.</p>
+
+  <p>Here is what came back.</p>
+
+  <table>
+    <thead>
+      <tr><th>Period</th><th>Days</th><th>Mean pairwise</th><th>Equity&ndash;bond</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pre-crisis (2006&ndash;mid 2007)</td><td>307</td><td>0.155</td><td>+0.018</td></tr>
+      <tr><td>Crisis (Sep 2008&ndash;Mar 2009)</td><td>146</td><td>&minus;0.031</td><td>&minus;0.444</td></tr>
+      <tr><td>Recovery (2010&ndash;2019)</td><td>2,516</td><td>0.040</td><td>&minus;0.483</td></tr>
+      <tr class="hl"><td>2022</td><td>251</td><td>0.251</td><td>+0.084</td></tr>
+    </tbody>
+  </table>
+
+  <p>The crisis period has the <em>lowest</em> average correlation of the four. Equities and
+  long-dated Treasuries moved at &minus;0.44 through the worst of it and stayed near
+  &minus;0.48 for the decade that followed. On this basket, in the crisis everyone studies,
+  diversification did what it was supposed to do.</p>
+
+  <p>The period where it failed is 2022. Average pairwise correlation of 0.251, the highest
+  of any window measured, with the equity&ndash;bond relationship turning positive. On a
+  rolling basis the peak falls on 29 December 2022 &mdash; the most correlated single point
+  in seventeen years of data.</p>
+
+  <figure>
+    <img src="assets/fig1_rolling_correlation.png" alt="Rolling correlation between equities and long-dated Treasuries, 2006 to 2022">
+    <figcaption>Equity&ndash;bond correlation, 126-day rolling window. Negative on 93% of
+    days, with the deepest readings around the crisis. Excursions above zero are rare
+    and recent.</figcaption>
+  </figure>
+
+  <h2>What was actually converging in 2008</h2>
+
+  <p>The cliché is not baseless. It is imprecise about which assets, and the imprecision
+  hides the mechanism.</p>
+
+  <table>
+    <thead>
+      <tr><th>Period</th><th>Equity&ndash;oil</th><th>Equity&ndash;gold</th><th>Risk-asset mean</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pre-crisis (2006&ndash;mid 2007)</td><td>+0.082</td><td>+0.246</td><td>+0.259</td></tr>
+      <tr class="hl"><td>Crisis (Sep 2008&ndash;Mar 2009)</td><td>+0.559</td><td>+0.039</td><td>+0.271</td></tr>
+      <tr><td>Recovery (2010&ndash;2019)</td><td>+0.422</td><td>&minus;0.016</td><td>+0.186</td></tr>
+      <tr><td>2022</td><td>+0.108</td><td>+0.193</td><td>+0.241</td></tr>
+    </tbody>
+  </table>
+
+  <p>Equity&ndash;oil correlation went from +0.08 to +0.56, close to a sevenfold increase
+  and the clearest convergence anywhere in the data. Gold moved the other way, from +0.25
+  down to +0.04, decoupling from equities precisely when that was useful. The average across
+  the three risk assets barely shifted &mdash; 0.259 to 0.271 &mdash; because those two
+  effects largely cancelled.</p>
+
+  <p>So the aggregate figure conceals two opposite movements. Reporting only the mean
+  pairwise correlation would have missed the entire story, in both directions.</p>
+
+  <hr class="rule">
+
+  <h2>Two crises, two kinds of shock</h2>
+
+  <p>The difference between 2008 and 2022 is not severity. It is what was being repriced.</p>
+
+  <p><strong>2008 was a growth shock.</strong> Expected earnings collapsed, and so did
+  expected demand for oil, which is why equities and oil fell together for the same
+  underlying reason. Policy rates were cut and investors moved into government paper, so
+  Treasuries rallied while everything cyclical fell. A portfolio holding equities and long
+  bonds was hedged, because those two respond to a growth shock in opposite directions.</p>
+
+  <p><strong>2022 was a discount-rate shock.</strong> Inflation rose, policy rates followed,
+  and a higher discount rate reduces the present value of any future cash flow &mdash;
+  a company's earnings and a bond's coupons alike. Nothing was hedged, because the shock
+  reached both legs of the hedge through the same channel.</p>
+
+  <p class="pull">The bond hedge is not a property of bonds. It is a property of the kind
+  of shock that happens to arrive.</p>
+
+  <p>That is a narrower and more useful claim than "correlations converge in a crisis."
+  Negative equity&ndash;bond correlation holds when the driver is growth or credit. It
+  inverts when the driver is inflation or policy. Anyone whose portfolio depends on that
+  hedge is holding a view about which kind of shock comes next, whether or not they have
+  framed it that way.</p>
+
+  <figure>
+    <img src="assets/fig2_regime_correlations.png" alt="Average pairwise correlation across five asset classes, 2006 to 2022">
+    <figcaption>Average pairwise correlation across all five asset classes. The peak is
+    in late 2022, not 2008.</figcaption>
+  </figure>
+
+  <div class="caveat">
+    <h3>What this does not show</h3>
+    <ul>
+      <li><strong>The basket has no credit exposure.</strong> The 2008 correlation story is
+      largely about corporate credit, securitised products, emerging markets and hedge-fund
+      positioning, none of which appears in these five ETFs. The convergence was real; it
+      happened in assets I did not measure.</li>
+      <li><strong>Treasuries benefit from a flight to quality</strong>, so including them
+      makes a negative equity&ndash;bond reading in a credit crisis close to inevitable.
+      That is a real property of the asset rather than an artefact, but it does mean this
+      basket was always likely to look well diversified in 2008.</li>
+      <li><strong>Short-dated Treasuries have very low volatility</strong> &mdash; a daily
+      standard deviation of 0.09% against 1.27% for equities &mdash; which drags the mean
+      pairwise figure toward zero and makes it a coarse summary.</li>
+      <li><strong>The sample starts in April 2006</strong>, limited by the oil ETF's
+      inception, leaving roughly fifteen months of pre-crisis baseline.</li>
+    </ul>
+  </div>
+
+  <h2>What I would take from it</h2>
+
+  <p>Report the components, not just the aggregate. Mean pairwise correlation was flat
+  across the crisis while two of its constituent pairs moved sharply in opposite directions.
+  A single summary number was actively misleading here, and I would have published the
+  wrong conclusion had I stopped at it.</p>
+
+  <p>And be specific about which relationship you are relying on. "Diversification failed
+  in 2008" gets repeated often enough to feel like a fact. On this data it is not one. What
+  failed was a particular set of assets under a particular mechanism &mdash; and the hedge
+  most balanced portfolios actually depend on failed fourteen years later, under a different
+  mechanism, in a year far fewer courses spend time on.</p>
+
+  <p>I went in expecting to confirm the standard account. The value of the exercise was in
+  not doing that.</p>
+
+  <p class="endnote">
+  Notebook and data: <a href="https://github.com/Jackline-Jebet/correlation-regimes" id="repoLink">GitHub repository</a> &middot;
+  Related: <a href="notes-kelly-portfolio.html">The technique that worked perfectly and did nothing</a> &middot;
+  <a href="notes.html">More notes</a>
+  </p>
+
+</article>
+</section>
+
+<div class="wrap">
+  <div class="foot">
+    <span>&copy; 2026 Jackline Jebet</span>
+    <span>Nairobi, Kenya &middot; Open to remote</span>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
