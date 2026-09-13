@@ -232,7 +232,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="skills.html">Skills</a></li>
         <li><a href="projects.html">Projects</a></li>
-        <li><a href="notes.html" aria-current="page">Notes</a></li>
+        <li><a href="notes.html" aria-current="page">Research Notes</a></li>
         <li><a href="education.html">Education</a></li>
         <li><a href="experience.html">Experience</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -295,9 +295,42 @@ const LINKEDIN = "https://linkedin.com/in/jackline-jebet";
 
 const ENTRIES = [
 
-    {
+  {
+    slug: "ml-portfolios-plain",
+    title: "Does machine learning make portfolios better?",
+    type: "Writing",
+    topics: ["Portfolio"],
+    tags: ["plain-english", "machine-learning", "research-note"],
+    blurb: "We tested three techniques on ten US stocks. One helped, one did nothing, and splitting the money evenly beat all of them on returns.",
+    live: true,
+    question: "Do machine learning techniques improve portfolio management, or just add complexity?",
+    intro: "A plain-language version of our group research project, written for readers who do not work in quantitative finance. No formulas, no jargon.",
+    parts: [
+      { n: "Article", label: "Does machine learning make portfolios better?", url: "notes-ml-portfolios.html" },
+      { n: "Technical", label: "Full write-up with methodology", url: "notes-kelly-portfolio.html" }
+    ],
+    findings: "Splitting money evenly across all ten stocks produced the highest average growth. The grouping method took smaller losses but not higher returns. One technique changed nothing at all, because a 20% position limit set at the start had already determined the answer.",
+    repo: "https://github.com/Jackline-Jebet/kelly-hrp-portfolio"
+  }, 
+  {
+    slug: "black-scholes-normality",
+    title: "The formula works because nobody believes it",
+    type: "Writing",
+    topics: ["Derivatives", "Markets"],
+    tags: ["black-scholes", "kurtosis", "fat-tails", "volatility-smile"],
+    blurb: "Black-Scholes assumes returns are normally distributed. All ten stocks in my research universe contradicted that. The market has known for decades and prices around it anyway.",
+    live: true,
+    question: "What does Black-Scholes assume, and does the data support it?",
+    intro: "Excess kurtosis across ten large US stocks ran from 2.44 to 16.33 against a normal-distribution benchmark of zero. Traces how the normality assumption entered the model through Bachelier and Samuelson, what fat tails cost in practice, and why the volatility smile means the market already prices around the assumption it quotes in.",
+    parts: [
+      { n: "Article", label: "The formula works because nobody believes it", url: "notes-black-scholes.html" }
+    ],
+    findings: "Not one of ten stocks showed excess kurtosis near zero. The normality assumption is not a bolt-on simplification, it is what makes the equation solvable. Since 1987 the market has priced downside strikes at higher implied volatility than the model implies, which means Black-Scholes survives as a quoting convention rather than as a description of returns.",
+    repo: null
+  },
+  {
     slug: "kelly-hrp-denoising",
-    title: "The technique that worked perfectly and did nothing",
+    title: "A ML technique that worked perfectly and did nothing",
     type: "Writing",
     topics: ["Portfolio", "Risk", "Machine learning"],
     tags: ["kelly", "hrp", "denoising", "cross-validation"],

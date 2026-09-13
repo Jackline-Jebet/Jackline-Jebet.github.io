@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The formula works because nobody believes it — Jackline Jebet</title>
+<meta name="description" content="Black-Scholes assumes returns are normally distributed. Every stock in my own research universe contradicts that. The interesting part is that the market already knows, and prices around it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=3">
+<style>
+.article { max-width: 700px; margin: 0 auto; }
+.article-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-light); margin-bottom: 20px; display: flex; gap: 14px; flex-wrap: wrap; }
+.article h1 { font-size: clamp(36px, 5.4vw, 56px); font-weight: 300; letter-spacing: -.018em; line-height: 1.06; margin-bottom: 22px; }
+.standfirst { font-size: 20px; color: var(--muted); margin-bottom: 32px; line-height: 1.55; }
+.byline { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px 0; font-size: 13.5px; color: var(--muted-light); margin-bottom: 44px; font-family: var(--font-mono); letter-spacing: .03em; }
+.article h2 { font-size: 27px; font-weight: 400; margin: 48px 0 18px; }
+.article p { margin: 0 0 20px; font-size: 17px; line-height: 1.72; }
+.article p.lead::first-letter { font-family: var(--font-serif); font-size: 58px; float: left; line-height: .82; padding: 4px 10px 0 0; color: var(--accent); }
+.article table { width: 100%; border-collapse: collapse; margin: 26px 0 30px; font-size: 15px; }
+.article th, .article td { text-align: right; padding: 10px; border-bottom: 1px solid var(--border-light); }
+.article th:first-child, .article td:first-child { text-align: left; }
+.article thead th { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-light); border-bottom: 1px solid var(--border); }
+.article tbody tr.hl td { background: var(--accent-dim); font-weight: 500; }
+.pull { border-left: 2px solid var(--accent); padding-left: 22px; margin: 34px 0; font-family: var(--font-serif); font-size: 25px; font-style: italic; font-weight: 300; line-height: 1.32; }
+.rule { border: 0; text-align: center; margin: 44px 0; }
+.rule::before { content: "\2022 \2022 \2022"; letter-spacing: .8em; color: var(--muted-light); font-size: 11px; }
+.caveat { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin: 34px 0; font-size: 15px; color: var(--muted); }
+.caveat h3 { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 500; }
+.caveat p { font-size: 15px; margin-bottom: 12px; line-height: 1.6; }
+.caveat p:last-child { margin-bottom: 0; }
+.endnote { font-size: 13.5px; color: var(--muted-light); border-top: 1px solid var(--border); padding-top: 22px; margin-top: 48px; line-height: 1.7; }
+.endnote a { color: var(--ink); border-bottom: 1px solid var(--accent); text-decoration: none; }
+@media (max-width: 640px) {
+  .article h2 { font-size: 22px; margin: 34px 0 14px; }
+  .article p { font-size: 16px; }
+  .standfirst { font-size: 17.5px; }
+  .pull { font-size: 20px; padding-left: 16px; }
+  .article p.lead::first-letter { font-size: 46px; }
+  .article table { font-size: 13px; }
+  .article th, .article td { padding: 7px 4px; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">Jackline <em>Jebet</em></a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="notes.html" aria-current="page">Notes</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap section">
+<article class="article">
+
+  <div class="article-meta">
+    <span>Analysis</span><span>Derivatives</span><span>8 min</span>
+  </div>
+
+  <h1>The formula works because nobody believes it</h1>
+
+  <p class="standfirst">Black-Scholes assumes returns are normally distributed. Every single
+  stock in my own research universe contradicts that, some of them badly. The interesting
+  part is not that the assumption is wrong. It is that the market has known for decades
+  and prices around it anyway.</p>
+
+  <p class="byline">Jackline Jebet &middot; MSc Financial Engineering, WorldQuant University</p>
+
+  <p class="lead">While working on a portfolio project last month I printed the descriptive
+  statistics for ten large US stocks, the way you do before touching anything else. Means,
+  volatilities, skew, kurtosis. It is a housekeeping step and I nearly scrolled past it.</p>
+
+  <p>Then I looked at the kurtosis column properly.</p>
+
+  <table>
+    <thead>
+      <tr><th>Ticker</th><th>Ann. volatility</th><th>Skew</th><th>Excess kurtosis</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Exxon Mobil</td><td>21.89%</td><td>&minus;0.62</td><td>2.44</td></tr>
+      <tr><td>Tesla</td><td>65.59%</td><td>+0.67</td><td>4.51</td></tr>
+      <tr><td>Alphabet</td><td>29.98%</td><td>+0.25</td><td>5.15</td></tr>
+      <tr><td>Merck</td><td>25.32%</td><td>&minus;0.88</td><td>6.89</td></tr>
+      <tr><td>Eli Lilly</td><td>36.32%</td><td>&minus;0.35</td><td>8.43</td></tr>
+      <tr><td>Bank of America</td><td>25.40%</td><td>&minus;0.64</td><td>8.78</td></tr>
+      <tr><td>Walmart</td><td>21.49%</td><td>+0.72</td><td>9.08</td></tr>
+      <tr><td>Goldman Sachs</td><td>29.09%</td><td>+0.69</td><td>11.18</td></tr>
+      <tr><td>Apple</td><td>29.13%</td><td>+1.00</td><td>13.19</td></tr>
+      <tr class="hl"><td>Meta</td><td>37.75%</td><td>+1.74</td><td>16.33</td></tr>
+    </tbody>
+  </table>
+
+  <p>A normal distribution has excess kurtosis of exactly zero. That is the benchmark. So
+  the lowest reading here, Exxon at 2.44, is already a long way from normal, and Meta at
+  16.33 is in a different postcode entirely. Not one of the ten came close. This was 437
+  trading days of ordinary large-cap data, nothing exotic, no crisis window selected to
+  make a point.</p>
+
+  <p>Which matters because the most widely used formula in finance assumes those numbers
+  should all be zero.</p>
+
+  <h2>How the assumption got in</h2>
+
+  <p>It arrived early, and for a good reason.</p>
+
+  <p>In 1900 a French mathematician named Louis Bachelier submitted a thesis at the Sorbonne
+  called <em>Théorie de la spéculation</em>, in which he modelled stock prices as Brownian
+  motion. Brownian motion is the random jitter of particles suspended in fluid, first
+  described by the botanist Robert Brown in 1827 while watching pollen grains under a
+  microscope. Bachelier's idea was that prices wander in the same undirected way, which was
+  a genuinely radical claim about markets at the time and was largely ignored for fifty
+  years.</p>
+
+  <p>It also had a problem. If prices themselves follow Brownian motion, they can wander
+  below zero, and a share price of negative four dollars is not a thing that happens.</p>
+
+  <p>Paul Samuelson came across the work in the mid 1950s and fixed it with a modification
+  that looks small and is not. Instead of prices following Brownian motion, let the
+  <em>logarithm</em> of prices follow it. That change guarantees prices stay positive, and
+  it gives you geometric Brownian motion, which is the engine underneath Black-Scholes and
+  most of what came after.</p>
+
+  <p>However, taking logs carries a consequence that rarely gets stated as plainly as it
+  should. If log prices follow Brownian motion, then log returns are normally distributed.
+  That is not an optional extra. It is the same assumption viewed from a different angle,
+  and it is what makes the mathematics tractable. Without it there is no closed-form
+  solution, no tidy partial differential equation, no formula you can put on a calculator.</p>
+
+  <p class="pull">The normality assumption is not a simplification bolted onto the model.
+  It is the thing that makes the model solvable at all.</p>
+
+  <p>Fischer Black spent the back half of the 1960s working on exactly this problem, coming
+  at it through warrants rather than options because warrants traded more actively then.
+  He had the differential equation by 1969 and could not solve it. Myron Scholes joined him,
+  Robert Merton derived the result independently and initially thought the approach was
+  wrong, and the paper appeared in 1973. Within a few years the Wall Street Journal was
+  running advertisements for calculators with the formula built in. Scholes and Merton took
+  the Nobel in 1997, by which time Black had died.</p>
+
+  <p>What none of them could do, and what nobody has done since, is remove the assumption
+  while keeping the answer.</p>
+
+  <hr class="rule">
+
+  <h2>What fat tails actually cost you</h2>
+
+  <p>Excess kurtosis of 16 sounds abstract. In practice it means large moves happen far more
+  often than the normal distribution allows, and the gap is not small. Under normality,
+  moves of five or six standard deviations are supposed to be so rare that you would not
+  expect to see one in several human lifetimes of trading. In real equity data they turn up
+  every few years, and in 2008 several arrived in the same week.</p>
+
+  <p>So a model built on normality will systematically underprice the things that hurt most.
+  An option that pays out only in a large move is worth more than the formula says, because
+  large moves are more common than the formula assumes. Anyone selling those options at the
+  model price is selling insurance too cheaply, and the bill does not arrive gradually.</p>
+
+  <p>This is not a theoretical concern, and it shows up in my own work in a second way.
+  Because I was building a Kelly-optimal portfolio, which maximises expected log growth, the
+  tails mattered more than usual. Log utility is severely punished by large losses, so
+  estimating the distribution with a Gaussian approximation would have thrown away exactly
+  the behaviour the objective function cares about most. So we optimised directly on the
+  empirical return distribution instead. Not out of theoretical purity, but because the
+  kurtosis column told us the shortcut would have been lying to us.</p>
+
+  <h2>The part I find genuinely interesting</h2>
+
+  <p>None of this is news. Practitioners have known the assumption fails since at least the
+  1987 crash, which produced a single-day move that geometric Brownian motion says should
+  essentially never occur. Before 1987, options across different strike prices traded at
+  roughly similar implied volatilities, which is what you would expect if the market
+  believed the model. After 1987, they did not, and they never have again.</p>
+
+  <p>That pattern has a name. Plot implied volatility against strike price and you get the
+  volatility smile, or in equities more often a skew, with downside strikes priced at higher
+  implied volatility than the model would imply. Which means the market is charging extra
+  for exactly the tail events Black-Scholes says are negligible.</p>
+
+  <p>Nevertheless the formula is still everywhere, and this is the bit worth sitting with.
+  It survives not because anyone believes its assumptions, but because it has become a
+  translation layer. Quoting an option price in dollars tells you little. Quoting it as an
+  implied volatility, which means the volatility you would have to plug into Black-Scholes
+  to recover the observed market price, gives you a number you can compare across strikes,
+  maturities and underlyings.</p>
+
+  <p class="pull">The model failed as a description of the world and then succeeded as a
+  common language for disagreeing about it.</p>
+
+  <p>So when a trader quotes a strike at 24 vol, they are not asserting that returns are
+  normally distributed. They are using a formula everyone agrees is wrong, in a way everyone
+  understands, as a unit of measurement. The volatility surface is a running record of the
+  ways the market thinks the model is wrong, expressed in the model's own vocabulary.</p>
+
+  <div class="caveat">
+    <h3>Worth being clear about</h3>
+    <p>The ten-stock sample above is from a specific universe over 437 trading days. Fat
+    tails in equity returns are a well-established finding and my numbers are consistent
+    with a large literature, so I am not claiming a discovery, only that I checked rather
+    than assumed.</p>
+    <p>There are also models that relax the normality assumption directly, including
+    stochastic volatility approaches and jump-diffusion models. They fit observed prices
+    better and they are used. However they cost tractability and add parameters that have
+    to be estimated, which is its own source of error, and none of them has displaced
+    Black-Scholes as the quoting convention.</p>
+  </div>
+
+  <h2>Why I keep returning to this</h2>
+
+  <p>Three of my projects have now ended in the same place. In a portfolio study, the
+  position cap turned out to matter more than the covariance estimate we spent the effort
+  improving. In a correlation study, the crisis everyone teaches as diversification failing
+  showed the hedge working, while the year it actually broke gets far less attention. And
+  here, a formula used trillions of times a year rests on an assumption that ten minutes
+  with a kurtosis column contradicts.</p>
+
+  <p>The pattern is not that the models are bad. They are extraordinary pieces of work and I
+  use them. It is that the assumptions underneath them are load-bearing, they are usually
+  invisible, and checking them is nearly always cheaper than the alternative.</p>
+
+  <p>Fischer Black stared at an unsolvable equation for years. The least I can do is look at
+  the summary statistics before I use his answer.</p>
+
+  <p class="endnote">
+  The portfolio study these figures come from:
+  <a href="notes-kelly-portfolio.html">The technique that worked perfectly and did nothing</a><br>
+  Related: <a href="notes-correlation-breakdown.html">Diversification didn't fail in 2008</a><br>
+  <a href="notes.html">More notes</a>
+  </p>
+
+</article>
+</section>
+
+<div class="wrap">
+  <div class="foot">
+    <span>&copy; 2026 Jackline Jebet</span>
+    <span>Nairobi, Kenya &middot; Open to remote</span>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
